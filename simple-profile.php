@@ -4,7 +4,7 @@ Plugin Name: Simple User Profile
 Plugin URI: 
 Description: Select which inputs to remove from the user profile.  You can remove all options except Username, email, and password in Settings>User Profile by checking the options you don't want displayed. 
 Author: Innovative Solutions
-Version: 1.0
+Version: 1.2
 Author URI: http://www.whereyoursolutionis.com
 */
 
@@ -113,9 +113,9 @@ $toHide= get_option('usrprof_toHigh');
 
 <tr><td>&nbsp;</td></tr>
 <tr> <td> Change About Yourself Label to: <input name="about" value="<?php echo get_option('usrprof_about');?>" />
-<tr><td> <input type="checkbox"  name ="to_remove[]" value="description"  <?php if( is_array($toHide) && in_array('description',$rem)){echo ' checked="checked" '; }?> /> Biographical Info </td></tr>
+<tr><td> <input type="checkbox"  name ="to_remove[]" value="description"  <?php if( is_array($rem) && in_array('description',$rem)){echo ' checked="checked" '; }?> /> Biographical Info </td></tr>
 
-
+ 
 
 
 
