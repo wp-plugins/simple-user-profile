@@ -2,9 +2,9 @@
 /*
 Plugin Name: Simple User Profile
 Plugin URI: 
-Description: Select which inputs to remove from the user profile.  You can remove all options except Username, email, and password in Settings>User Profile by checking the options you don't want displayed. 
+Description: Select which inputs to remove from the user profile.  You can remove all options except Username, email, and password in User>Simplify Profile by checking the options you don't want displayed. 
 Author: Innovative Solutions
-Version: 1.2
+Version: 1.5
 Author URI: http://www.whereyoursolutionis.com
 */
 
@@ -21,6 +21,7 @@ function  Simplr_usr_profiler_menu(){
 
 
 
+add_users_page ('Simplify the User Profile Page','Simplify Profile','manage_options','adj-usr-profilr-usr','Simplr_usr_profiler' );
 add_options_page ('Simplify the User Profile Page','User Profile','manage_options','adj-usr-profilr','Simplr_usr_profiler' );
  
 
@@ -105,12 +106,19 @@ $toHide= get_option('usrprof_toHigh');
 
 <tr><td>&nbsp;</td></tr>
 <tr> <td> Change Contact Info Label to: <input name="contact" value="<?php echo get_option('usrprof_contact');?>" />
-<tr><td> <input type="checkbox"  name ="to_remove[]" value="url"  <?php if( is_array($rem) && in_array('url',$rem)){echo ' checked="checked" '; }?> /> website</td></tr>
-<tr><td> <input type="checkbox"  name ="to_remove[]" value="aim"  <?php if( is_array($rem) && in_array('aim',$rem)){echo ' checked="checked" '; }?> /> Aim</td></tr>
-<tr><td> <input type="checkbox"  name ="to_remove[]" value="jabber"  <?php if( is_array($rem) && in_array('jabber',$rem)){echo ' checked="checked" '; }?> /> Jabber, Google Talk</td></tr>
-<tr><td> <input type="checkbox"  name ="to_remove[]" value="yim"  <?php if( is_array($rem) && in_array('yim',$rem)){echo ' checked="checked" '; }?> /> Yahoo IM</td></tr>
-<tr><td> <input type="checkbox"  name ="to_remove[]" value="google_profile"  <?php if( is_array($rem) && in_array('google_profile',$rem)){echo ' checked="checked" '; }?> /> Google Profile</td></tr>
 
+<?php
+foreach (_wp_get_user_contactmethods() as $name => $desc) {
+
+?>
+
+
+
+<tr><td> <input type="checkbox"  name ="to_remove[]" value="<?php echo $name; ?>"  <?php if( is_array($rem) && in_array($name,$rem)){echo ' checked="checked" '; }?> /><?php echo apply_filters('user_'.$name.'_label', $desc); ?> </td></tr>
+
+<?php
+}
+?>
 <tr><td>&nbsp;</td></tr>
 <tr> <td> Change About Yourself Label to: <input name="about" value="<?php echo get_option('usrprof_about');?>" />
 <tr><td> <input type="checkbox"  name ="to_remove[]" value="description"  <?php if( is_array($rem) && in_array('description',$rem)){echo ' checked="checked" '; }?> /> Biographical Info </td></tr>
@@ -126,6 +134,8 @@ $toHide= get_option('usrprof_toHigh');
 <input type="submit" value="Save Options" name="setopts" />
 
 </form>
+
+
 
 
 </div>
