@@ -4,7 +4,7 @@ Tags: user profile, simplify profile, remove profile fields,edit profile, remove
 Donate:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RMCSV4J9FALZ6
 Requires at least: 3.0
 Tested up to: 3.5
-Stable Tag:1.5
+Stable Tag:1.7
 
 
 Simply your user profile by removing fields your users don't need and removing or changing the section header text. 
@@ -39,4 +39,7 @@ Any additional fields that are added by most plugins and themes will be removed 
 * Fixed bug that would sometimes show bio box unchecked even if it was excluded.  
 
 1.5
-* Added support for custom contact methods 
+* Added support for custom contact methods
+
+1.7
+* Added website url back in, apparently this doesn't list in contact methods

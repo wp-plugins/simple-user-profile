@@ -4,7 +4,7 @@ Plugin Name: Simple User Profile
 Plugin URI: 
 Description: Select which inputs to remove from the user profile.  You can remove all options except Username, email, and password in User>Simplify Profile by checking the options you don't want displayed. 
 Author: Innovative Solutions
-Version: 1.5
+Version: 1.7
 Author URI: http://www.whereyoursolutionis.com
 */
 
@@ -91,7 +91,7 @@ $toHide= get_option('usrprof_toHigh');
 
 <thead><tr><th><h4><b>Select Profile fields to disable</b> <span><em style="font-size:9px;font-weight:regular;"> (Leave title fields blank to not show them)</em></span></h4></th></tr></thead> 
 
-<tr> <td> Change Personal  Label to: <input name="personal" value="<?php echo get_option('usrprof_personal');?>" />
+<tr> <td> Change Personal  Label to: <input name="personal" value="<?php echo get_option('usrprof_personal');?>" /></td></tr>
 <tr><td> <input type="checkbox"  name ="to_remove[]" value="rich_editing"  <?php if(is_array($rem) && in_array('rich_editing',$rem)){echo ' checked="checked" '; }?> />Visual Editor </td></tr>
 <tr><td> <input type="checkbox"  name ="to_remove[]" value="admin_color"  <?php if( is_array($rem) && in_array('admin_color',$rem)){echo ' checked="checked" ';} ?> /> Admin Color Scheme</td></tr>
 <tr><td> <input type="checkbox"  name= "to_remove[]" value="comment_shortcuts"  <?php if( is_array($rem) && in_array('comment_shortcuts',$rem)){echo ' checked="checked" ';} ?> /> Keyboard Shortcuts</td></tr>
@@ -105,7 +105,9 @@ $toHide= get_option('usrprof_toHigh');
 
 
 <tr><td>&nbsp;</td></tr>
-<tr> <td> Change Contact Info Label to: <input name="contact" value="<?php echo get_option('usrprof_contact');?>" />
+<tr> <td> Change Contact Info Label to: <input name="contact" value="<?php echo get_option('usrprof_contact');?>" /></td></tr>
+<tr><td> <input type="checkbox"  name ="to_remove[]" value="url"  <?php if( is_array($rem) && in_array('url',$rem)){echo ' checked="checked" '; }?> /> Website</td></tr>
+
 
 <?php
 foreach (_wp_get_user_contactmethods() as $name => $desc) {
@@ -120,7 +122,7 @@ foreach (_wp_get_user_contactmethods() as $name => $desc) {
 }
 ?>
 <tr><td>&nbsp;</td></tr>
-<tr> <td> Change About Yourself Label to: <input name="about" value="<?php echo get_option('usrprof_about');?>" />
+<tr> <td> Change About Yourself Label to: <input name="about" value="<?php echo get_option('usrprof_about');?>" /></td></tr>
 <tr><td> <input type="checkbox"  name ="to_remove[]" value="description"  <?php if( is_array($rem) && in_array('description',$rem)){echo ' checked="checked" '; }?> /> Biographical Info </td></tr>
 
  
