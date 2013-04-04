@@ -4,7 +4,7 @@ Plugin Name: Simple User Profile
 Plugin URI: 
 Description: Select which inputs to remove from the user profile.  You can remove all options except Username, email, and password in User>Simplify Profile by checking the options you don't want displayed. 
 Author: Innovative Solutions
-Version: 1.7
+Version: 1.9
 Author URI: http://www.whereyoursolutionis.com
 */
 
@@ -64,15 +64,19 @@ function  Simplr_usr_profiler(){
      
      update_option('usrprof_toRemove', $_POST['to_remove'] );
      update_option('usrprof_toHigh', $_POST['to_hide'] );
+	 
+	 
+     update_option('simple_profile_default_uncheck_bar', $_POST['def_bar'] );
+     update_option('simple_profile_show_front', $_POST['page_id'] );
      
-   
+     update_option('simple_profile_on_edit',$_POST['onAdmin']);
      
      }
 
 
 $rem = get_option('usrprof_toRemove');
 $toHide= get_option('usrprof_toHigh');
-
+$disBar = get_option('simple_profile_default_uncheck_bar');
 
 ?>
 
@@ -133,10 +137,28 @@ foreach (_wp_get_user_contactmethods() as $name => $desc) {
 
 <br />
 
+
+<h2>Other Options</h2>
+<?php
+$IsA = get_option('simple_profile_on_edit');
+?>
+<br />
+Apply to Front Page:<br />
+<?php wp_dropdown_pages( array('name' => 'page_id','selected'=> get_option('simple_profile_show_front'),'show_option_none'=>'-- No Page --' ) );  ?>
+
+<br /> 
+<br />
+<input type="checkbox" name="def_bar" value="yes" <?php if($disBar=='yes'){echo ' checked="checked" ';}?>> Disable admin bar in users profile on registration 
+
+<br />
+<br />
+<input type="checkbox" value="yes" <?php if ($IsA=='yes'){echo ' checked ';} ?> name="onAdmin" />Show on Admin Edit Page<br />
+
+<br />
 <input type="submit" value="Save Options" name="setopts" />
 
 </form>
-
+ 
 
 
 
@@ -182,7 +204,63 @@ function Simplify_the_user_profile(){
 
 
 global $pagenow;
-		if (( $pagenow == 'profile.php' ) ){ 
+
+
+
+		if (( $pagenow == 'profile.php' ) ){
+
+		UserProfileSetPageDisplay();
+
+		}
+
+		
+		$ifOadmin = get_option('simple_profile_on_edit');
+		
+		if (( $pagenow == 'user-edit.php' && $ifOadmin=='yes') ){
+
+		UserProfileSetPageDisplay();
+
+		}
+
+		
+		
+		
+
+}
+add_action('admin_head','Simplify_the_user_profile');
+
+
+
+
+function Simplify_the_user_profile_frontend(){
+global $post;
+
+$t = get_option('simple_profile_show_front');
+
+	if($t==$post->ID){
+	UserProfileSetPageDisplay();
+	}
+
+}
+add_action('wp_head','Simplify_the_user_profile_frontend');
+
+
+
+add_action('user_register','simple_profile_default_uncheck_bar');
+function simple_profile_default_uncheck_bar($user_ID) {
+		if(get_option('simple_profile_default_uncheck_bar')=='yes'){
+			update_user_meta( $user_ID, 'show_admin_bar_front', 'false' );
+		}
+	}
+
+
+
+
+
+
+function UserProfileSetPageDisplay(){
+
+ 
 
 
 
@@ -241,6 +319,8 @@ global $_wp_admin_css_colors;
 
    $_wp_admin_css_colors = 0;
 
+}
+
 
 
 }
@@ -249,8 +329,3 @@ global $_wp_admin_css_colors;
 
 
 
-}
-
-
-}
-add_action('admin_head','Simplify_the_user_profile');
